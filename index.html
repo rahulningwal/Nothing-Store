@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -9,7 +10,6 @@
 
 <link rel="preconnect" href="https://www.gstatic.com">
 <link rel="preconnect" href="https://db.onlinewebfonts.com">
-<link rel="preconnect" href="https://firebasestorage.googleapis.com">
 
 <style>
 @font-face {
@@ -329,7 +329,7 @@ body::before {
   letter-spacing:-.8px;
 }
 
-/* APP SORT */
+/* SORT */
 
 .app-sort {
   max-width:145px;
@@ -551,7 +551,7 @@ body::before {
   color:var(--text);
 }
 
-/* COMPACT DETAILS MODAL */
+/* APP DETAILS MODAL */
 
 .modal-bg {
   position:fixed;
@@ -588,6 +588,8 @@ body::before {
   to {opacity:1;transform:translateY(0)}
 }
 
+/* MODAL TOP BAR + CLOSE BUTTON */
+
 .modal-topline {
   display:flex;
   align-items:center;
@@ -595,11 +597,17 @@ body::before {
   margin-bottom:15px;
 }
 
-.modal-topline span {
+.modal-topline > span {
   font-family:"NType 82",monospace;
   font-size:10px;
   letter-spacing:1px;
   color:#92978e;
+}
+
+.modal-topline-right {
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
 .modal-status {
@@ -614,6 +622,31 @@ body::before {
   height:6px;
   border-radius:50%;
   background:#75a879;
+}
+
+.modal-close {
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border:0;
+  border-radius:50%;
+  background:#f0f2ed;
+  color:#171917;
+  font-family:Arial,sans-serif;
+  font-size:23px;
+  line-height:1;
+  padding:0;
+  transition:background .2s ease,color .2s ease,transform .2s ease;
+}
+
+.modal-close:hover {
+  background:#171917;
+  color:#fff;
+}
+
+.modal-close:active {
+  transform:scale(.9);
 }
 
 /* APP IDENTITY */
@@ -649,7 +682,7 @@ body::before {
   overflow-wrap:anywhere;
 }
 
-/* DOWNLOAD BUTTON */
+/* DOWNLOAD */
 
 .modal-actions {
   display:grid;
@@ -684,7 +717,7 @@ body::before {
 
 .download-icon {font-size:17px}
 
-/* INFORMATION PANEL */
+/* INFORMATION */
 
 .info-panel {
   padding:14px 9px;
@@ -1191,7 +1224,18 @@ body::before {
 
     <div class="modal-topline">
       <span>NOTHING.store</span>
-      <span class="modal-status">AVAILABLE</span>
+
+      <div class="modal-topline-right">
+        <span class="modal-status">Available</span>
+
+        <button
+          class="modal-close"
+          id="closeModal"
+          type="button"
+          aria-label="Close app details">
+          ×
+        </button>
+      </div>
     </div>
 
     <div class="modal-app">
@@ -1211,8 +1255,10 @@ body::before {
         href="#"
         target="_blank"
         rel="noopener noreferrer">
+
         <span class="download-icon"></span>
         DOWNLOAD APK
+
       </a>
     </div>
 
@@ -1856,6 +1902,12 @@ function closeModal() {
       ? "hidden" : "";
 
 }
+
+/* CLOSE BUTTON */
+
+$("closeModal").addEventListener("click",closeModal);
+
+/* CLOSE ON BACKGROUND CLICK */
 
 $("modalBg").addEventListener("click",event => {
   if(event.target === $("modalBg")) {
